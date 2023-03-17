@@ -9,7 +9,7 @@ import UserContext from "../contexts/UserContext"
 
 export default function Login({setToken}){
 
-    const [loading, setLoading] = useState(<input type="submit" value="Entrar" required></input>)
+    const [loading, setLoading] = useState(<input data-test="login-btn" type="submit" value="Entrar" required></input>)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [on, setOn] = useState(false)
@@ -23,7 +23,7 @@ export default function Login({setToken}){
 
         setOn(true)
 
-        setLoading(<button><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
+        setLoading(<button data-test="login-btn"><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
 
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login"
         const body = {email, password}
@@ -36,7 +36,7 @@ export default function Login({setToken}){
         .catch((fail) => {
             setOn(false)
             alert(fail.response.data.message)
-            setLoading(<input type="submit" value="Entrar" required></input>)
+            setLoading(<input data-test="login-btn" type="submit" value="Entrar" required></input>)
         })
 
     }
@@ -45,12 +45,12 @@ export default function Login({setToken}){
         <Container>
             <img src={logo} alt="logo"></img>
             <form onSubmit={login}>
-                <input type="email" placeholder="email" value={email} id="email" disabled={on} onChange={(e) => setEmail(e.target.value)} required></input>
-                <input type="password" placeholder="senha" value={password} id="password" disabled={on} onChange={(e) => setPassword(e.target.value)} required></input>
+                <input data-test="email-input" type="email" placeholder="email" value={email} id="email" disabled={on} onChange={(e) => setEmail(e.target.value)} required></input>
+                <input data-test="password-input" type="password" placeholder="senha" value={password} id="password" disabled={on} onChange={(e) => setPassword(e.target.value)} required></input>
                 {loading}
             </form>
             <Link to={"/cadastro"}>
-                <p>Não tem uma conta? Cadastre-se!</p>
+                <p data-test="signup-link">Não tem uma conta? Cadastre-se!</p>
             </Link>
 
         </Container>

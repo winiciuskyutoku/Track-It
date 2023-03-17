@@ -12,7 +12,7 @@ export default function SignUp() {
     const [name, setName] = useState("")
     const [image, setImage] = useState("")
     const [password, setPassword] = useState("")
-    const [loading, setLoading] = useState(<input type="submit" value="Cadastrar" required></input>)
+    const [loading, setLoading] = useState(<input data-test="signup-btn" type="submit" value="Cadastrar" required></input>)
     const [on, setOn] = useState(false)
 
     const navigate = useNavigate()
@@ -22,7 +22,7 @@ export default function SignUp() {
 
         setOn(true)
 
-        setLoading(<button><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
+        setLoading(<button data-test="signup-btn"><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
 
         const body = { email, name, image, password }
 
@@ -32,7 +32,7 @@ export default function SignUp() {
         promise.then(() => navigate("/"))
         promise.catch((fail) => {
             setOn(false)
-            setLoading(<input type="submit" value="Cadastrar" required></input>)
+            setLoading(<input data-test="signup-btn" type="submit" value="Cadastrar" required></input>)
             alert(fail.response.data.message)
         })
 
@@ -42,14 +42,14 @@ export default function SignUp() {
         <Container>
             <img src={logo} alt="logo"></img>
             <form onSubmit={signup}>
-                <input type="email" placeholder="email" value={email} id="email" onChange={(e) => setEmail(e.target.value)} disabled={on} required></input>
-                <input type="password" placeholder="senha" value={password} id="password" onChange={(e) => setPassword(e.target.value)} disabled={on} required></input>
-                <input type="text" placeholder="nome" value={name} id="name" onChange={(e) => setName(e.target.value)} disabled={on} required></input>
-                <input type="url" placeholder="foto" value={image} id="image" onChange={(e) => setImage(e.target.value)} disabled={on} required></input>
+                <input data-test="email-input" type="email" placeholder="email" value={email} id="email" onChange={(e) => setEmail(e.target.value)} disabled={on} required></input>
+                <input data-test="password-input" type="password" placeholder="senha" value={password} id="password" onChange={(e) => setPassword(e.target.value)} disabled={on} required></input>
+                <input data-test="user-name-input" type="text" placeholder="nome" value={name} id="name" onChange={(e) => setName(e.target.value)} disabled={on} required></input>
+                <input data-test="user-image-input" type="url" placeholder="foto" value={image} id="image" onChange={(e) => setImage(e.target.value)} disabled={on} required></input>
                 {loading}
             </form>
             <Link to={"/"}>
-                <p>Já tem uma conta? Faça login!</p>
+                <p data-test="login-link">Já tem uma conta? Faça login!</p>
             </Link>
         </Container>
     )
