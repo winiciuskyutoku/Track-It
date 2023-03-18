@@ -6,6 +6,7 @@ import axios from "axios"
 import plus from "../assets/+.png"
 import { useState } from "react"
 import CreateHabitButton from "./CreateHabitButton"
+import trash from "../assets/Vector-2.png"
 
 export default function Habit({ token }) {
 
@@ -14,7 +15,7 @@ export default function Habit({ token }) {
     const [visible, setVisible] = useState(false)
     const [days, setDays] = useState([])
     const [name, setName] = useState("")
-    const [habitsBody, setHabitsBody] = useState("")
+    const [enable, setEnable] = useState(false)
 
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"]
 
@@ -30,9 +31,7 @@ export default function Habit({ token }) {
                 setLoading(true)
             })
             .catch(fail => console.log(fail.response.data))
-    }, [])
-
-    console.log(habits)
+    }, [habits])
 
     function habitBox() {
         setVisible(true)
@@ -41,6 +40,8 @@ export default function Habit({ token }) {
     function postHabit(e) {
         e.preventDefault()
 
+        setEnable(true)
+
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
         const body = { name: name, days: days }
         const config = {
@@ -48,8 +49,25 @@ export default function Habit({ token }) {
         }
 
         axios.post(url, body, config)
-            .then(sucess => console.log(sucess.data))
-            .catch(fail => console.log(fail.response.data.message))
+            .then(sucess => {
+                setHabits([...habits, sucess.data])
+                setVisible(false)
+                setEnable(false)
+                setName("")
+                setDays([])
+            })
+            .catch(fail => alert(fail.response.data.message))
+    }
+
+    function deleteHabit(id){
+        const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        }
+
+        if(window.confirm("Deseja mesmo remover esse hábito?") === true){
+            axios.delete(url, config).then(sucess => console.log(sucess.data)).catch(fail => console.log(fail.response.data.message))
+        }
     }
 
     if (loading === null) {
@@ -74,9 +92,9 @@ export default function Habit({ token }) {
                     </CreateHabits>
                     <HabitsContainer>
                         <HabitBox visible={visible}>
-                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={false}></input>
+                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
                             <DaysButton visible={visible}>
-                                {weekDays.map((e, i) => <CreateHabitButton e={e} i={i} setDays={setDays} days={days} />)}
+                                {weekDays.map((e, i) => <CreateHabitButton e={e} i={i} setDays={setDays} days={days} enable={enable}/>)}
                             </DaysButton>
                             <SaveHabit>
                                 <h2 onClick={() => setVisible(false)}>Cancelar</h2>
@@ -100,22 +118,30 @@ export default function Habit({ token }) {
                     </CreateHabits>
                     <HabitsContainer>
                         <HabitBox visible={visible}>
-                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={false}></input>
+                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
                             <DaysButton visible={visible}>
-                                {weekDays.map((e, i) => <CreateHabitButton e={e} i={i} setDays={setDays} days={days} />)}
+                                {weekDays.map((event, i) => <CreateHabitButton e={event} i={i} setDays={setDays} days={days} enable={enable}/>)}
                             </DaysButton>
                             <SaveHabit>
                                 <h2 onClick={() => setVisible(false)}>Cancelar</h2>
                                 <button onClick={postHabit}><h3>Salvar</h3></button>
                             </SaveHabit>
                         </HabitBox>
-                        {habits.map(e => {
-                            return (
-                                <HabitBox>
-                                    <h2>{e.name}</h2>
-                                </HabitBox>
-                            )
-                        })}
+                        <ContainerList>
+                            {habits.map(e => {
+                                return (
+                                    <HabitsList>
+                                        <HabitTitle>
+                                            <h2>{e.name}</h2>
+                                            <img src={trash} alt="lixo" onClick={() => deleteHabit(e.id)}></img>
+                                        </HabitTitle>
+                                        <DaysButton>
+                                            {weekDays.map((event, i) => <WeekDaysButton grey={e.days.includes(i) ? true : false}>{event}</WeekDaysButton>)}
+                                        </DaysButton>
+                                    </HabitsList>
+                                )
+                            })}
+                        </ContainerList>
                     </HabitsContainer>
                 </Container>
             </>
@@ -128,10 +154,12 @@ export default function Habit({ token }) {
 const Container = styled.div`
     margin-top: 70px;
     margin-bottom: 70px;
+    padding-bottom: 50px;
     background-color: #e5e5e5;
     height: calc(100vh - 140px);
     padding-left: 10px;
     padding-right: 10px;
+    overflow-y: scroll;
 `
 
 const CreateHabits = styled.div`
@@ -226,5 +254,47 @@ const SaveHabit = styled.div`
         font-size: 16px;
         border:none;
         border-radius: 5px;
+    }
+`
+
+const HabitsList = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 91px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    padding: 15px;
+    gap: 8px;
+    box-sizing: border-box;
+`
+
+const WeekDaysButton = styled.button`
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: ${(props) => props.grey === false ? "#FFFFFF" : "#CFCFCF"};
+    color: ${(props) => props.grey === false ? "#d4d4d4" : "#FFFFFF"};
+    border: 1px solid #d4d4d4;
+
+    font-size: 20px;
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+`
+
+const ContainerList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`
+
+const HabitTitle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    h2{
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        color: #666666;
     }
 `

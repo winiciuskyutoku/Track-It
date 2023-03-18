@@ -23,13 +23,14 @@ export default function Login({setToken}){
 
         setOn(true)
 
-        setLoading(<button data-test="login-btn"><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
+        setLoading(<button data-test="login-btn" disabled={true}><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
 
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login"
         const body = {email, password}
         axios.post(url, body)
         .then((sucess) => {
             setToken(sucess.data.token)
+            console.log(sucess.data.token)
             setUser(sucess.data.image)
             navigate("/hoje")
         })

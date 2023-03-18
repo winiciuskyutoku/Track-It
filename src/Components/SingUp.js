@@ -22,7 +22,7 @@ export default function SignUp() {
 
         setOn(true)
 
-        setLoading(<button data-test="signup-btn"><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
+        setLoading(<button data-test="signup-btn" disabled={true}><ThreeDots width="51px" height="15px" color="#FFFFFF" /></button>)
 
         const body = { email, name, image, password }
 

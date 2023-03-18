@@ -1,8 +1,15 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import styled from "styled-components"
 
-export default function CreateHabitButton({e, i, setDays, days}){
+export default function CreateHabitButton({e, i, setDays, days, enable}){
     const [clicked, setClicked] = useState(false)
+
+    useEffect(() => {
+        if(days.length === 0){
+            setClicked(false)
+        }
+    }, [days])
+
 
     function click(){
         if(clicked === false){
@@ -23,9 +30,10 @@ export default function CreateHabitButton({e, i, setDays, days}){
         console.log(days)
     }
 
-    return(
-        <Button clicked={clicked} onClick={click}>{e}</Button>
+    return (
+        <Button clicked={clicked} enable={enable} onClick={click} disabled={enable}>{e}</Button>
     )
+
 }
 
 const Button = styled.button`
