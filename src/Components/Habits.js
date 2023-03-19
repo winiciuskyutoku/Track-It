@@ -154,7 +154,7 @@ export default function Habit({ token }) {
 const Container = styled.div`
     margin-top: 70px;
     margin-bottom: 70px;
-    padding-bottom: 50px;
+    //padding-bottom: 50px;
     background-color: #e5e5e5;
     height: calc(100vh - 140px);
     padding-left: 10px;

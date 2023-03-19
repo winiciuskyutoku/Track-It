@@ -7,9 +7,7 @@ import { useContext } from "react";
 
 export default function NavBar() {
 
-    const percentage = 30;
-
-    const { user } = useContext(UserContext)
+    const { user, progress } = useContext(UserContext)
 
     return (
         <>
@@ -26,7 +24,7 @@ export default function NavBar() {
             </Bottom>
             <Link to="/hoje">
                 <CircularContainer>
-                    <CircularProgressbar value={percentage}
+                    <CircularProgressbar value={progress}
                     text="Hoje"
                     background={true}
                     backgroundPadding={5}
