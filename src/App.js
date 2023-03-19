@@ -2,6 +2,7 @@ import Login from "./Components/Login"
 import SignUp from "./Components/SingUp"
 import Habits from "./Components/Habits"
 import Today from "./Components/Today"
+import Historic from "./Components/Historic"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
 import UserContext from "./contexts/UserContext"
@@ -21,6 +22,7 @@ function App() {
             <Route path="/cadastro" element={<SignUp />} />
             <Route path="/habitos" element={<Habits token={token} />} />
             <Route path="/hoje" element={<Today token={token} />} />
+            <Route path="/historico" element={<Historic/>} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

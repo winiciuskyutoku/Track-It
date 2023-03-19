@@ -39,7 +39,7 @@ export default function MarkHabitAsDone({ token, id, setChange, change, done}) {
     }
 
     return (
-        <Button onClick={asDone} done={done}><img src={check} alt="Check"></img></Button>
+        <Button data-test="today-habit-check-btn" onClick={asDone} done={done}><img src={check} alt="Check"></img></Button>
     )
 }
 

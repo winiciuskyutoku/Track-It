@@ -31,7 +31,7 @@ export default function CreateHabitButton({e, i, setDays, days, enable}){
     }
 
     return (
-        <Button clicked={clicked} enable={enable} onClick={click} disabled={enable}>{e}</Button>
+        <Button data-test="habit-day" clicked={clicked} enable={enable} onClick={click} disabled={enable}>{e}</Button>
     )
 
 }

@@ -66,21 +66,21 @@ export default function Today({ token }) {
             <NavBar />
             <Container>
                 <CreateHabits>
-                <h1>{upperCase}{dayOfWeek.weekday(0).locale("pt-br").format(", DD/MM")}</h1>
-                <H2 arrayHabits={arrayHabits.length}>{arrayHabits.length === 0 ? "Nenhum" : (arrayHabits.length/tasks.length * 100).toFixed(0) + "%"} dos hábitos concluidos</H2> 
+                <h1 data-test="today">{upperCase}{dayOfWeek.weekday(0).locale("pt-br").format(", DD/MM")}</h1>
+                <H2 data-test="today-counter" arrayHabits={arrayHabits.length}>{arrayHabits.length === 0 ? "Nenhum" : (arrayHabits.length/tasks.length * 100).toFixed(0) + "%"} dos hábitos concluidos</H2> 
                 </CreateHabits>
                 <HabitsContainer>
                     {tasks.map(e => {
                             return (
-                                <HabitList>
+                                <HabitList data-test="today-habit-container">
                                     <Title>
-                                        <h2>{e.name}</h2>
+                                        <h2 data-test="today-habit-name">{e.name}</h2>
                                         <div>
                                             <Subtitle>
-                                                Sequência atual: <P done={e.done}>{e.currentSequence} {e.currentSequence > 1 ? "dias" : "dia"}</P>
+                                                Sequência atual: <P data-test="today-habit-sequence" done={e.done}>{e.currentSequence} {e.currentSequence > 1 ? "dias" : "dia"}</P>
                                             </Subtitle>
                                             <Subtitle>
-                                                Seu recorde:  <P2 currentSequence={e.currentSequence} highestSequence={e.highestSequence}>{e.highestSequence} {e.currentSequence > 1 ? "dias" : "dia"}</P2>
+                                                Seu recorde:  <P2 data-test="today-habit-record" currentSequence={e.currentSequence} highestSequence={e.highestSequence}>{e.highestSequence} {e.currentSequence > 1 ? "dias" : "dia"}</P2>
                                             </Subtitle>
                                         </div>
                                     </Title>

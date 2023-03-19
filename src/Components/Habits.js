@@ -88,17 +88,17 @@ export default function Habit({ token }) {
                 <Container>
                     <CreateHabits>
                         <h1>Meus hábitos</h1>
-                        <button onClick={habitBox}><img src={plus}></img></button>
+                        <button onClick={habitBox} data-test="habit-create-btn"><img src={plus}></img></button>
                     </CreateHabits>
                     <HabitsContainer>
-                        <HabitBox visible={visible}>
-                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
+                        <HabitBox visible={visible} data-test="habit-create-container">
+                            <input data-test="habit-name-input" placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
                             <DaysButton visible={visible}>
                                 {weekDays.map((e, i) => <CreateHabitButton e={e} i={i} setDays={setDays} days={days} enable={enable}/>)}
                             </DaysButton>
                             <SaveHabit>
-                                <h2 onClick={() => setVisible(false)}>Cancelar</h2>
-                                <button onClick={postHabit}><h3>Salvar</h3></button>
+                                <h2 onClick={() => setVisible(false)} data-test="habit-create-cancel-btn">Cancelar</h2>
+                                <button onClick={postHabit} data-test="habit-create-save-btn"><h3>Salvar</h3></button>
                             </SaveHabit>
                         </HabitBox>
                         <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
@@ -114,29 +114,29 @@ export default function Habit({ token }) {
                 <Container>
                     <CreateHabits>
                         <h1>Meus hábitos</h1>
-                        <button onClick={habitBox}><img src={plus}></img></button>
+                        <button onClick={habitBox} data-test="habit-create-btn"><img src={plus}></img></button>
                     </CreateHabits>
                     <HabitsContainer>
-                        <HabitBox visible={visible}>
-                            <input placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
+                        <HabitBox visible={visible} data-test="habit-create-container">
+                            <input data-test="habit-name-input" placeholder="nome do hábito" type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={enable}></input>
                             <DaysButton visible={visible}>
                                 {weekDays.map((event, i) => <CreateHabitButton e={event} i={i} setDays={setDays} days={days} enable={enable}/>)}
                             </DaysButton>
                             <SaveHabit>
-                                <h2 onClick={() => setVisible(false)}>Cancelar</h2>
-                                <button onClick={postHabit}><h3>Salvar</h3></button>
+                                <h2 onClick={() => setVisible(false)} data-test="habit-create-cancel-btn">Cancelar</h2>
+                                <button onClick={postHabit} data-test="habit-create-save-btn"><h3>Salvar</h3></button>
                             </SaveHabit>
                         </HabitBox>
                         <ContainerList>
                             {habits.map(e => {
                                 return (
-                                    <HabitsList>
+                                    <HabitsList data-test="habit-container">
                                         <HabitTitle>
-                                            <h2>{e.name}</h2>
-                                            <img src={trash} alt="lixo" onClick={() => deleteHabit(e.id)}></img>
+                                            <h2 data-test="habit-name">{e.name}</h2>
+                                            <img src={trash} alt="lixo" onClick={() => deleteHabit(e.id)} data-test="habit-delete-btn"></img>
                                         </HabitTitle>
                                         <DaysButton>
-                                            {weekDays.map((event, i) => <WeekDaysButton grey={e.days.includes(i) ? true : false}>{event}</WeekDaysButton>)}
+                                            {weekDays.map((event, i) => <WeekDaysButton data-test="habit-day" grey={e.days.includes(i) ? true : false}>{event}</WeekDaysButton>)}
                                         </DaysButton>
                                     </HabitsList>
                                 )

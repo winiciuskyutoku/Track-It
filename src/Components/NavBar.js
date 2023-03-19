@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
 
@@ -11,33 +11,35 @@ export default function NavBar() {
 
     return (
         <>
-            <Top>
+            <Top data-test="header">
                 <p>TrackIt</p>
                 <img src={user} alt="pfp"></img>
             </Top>
-            <Bottom>
-                <Link to="/habitos">
+            <Bottom data-test="menu">
+                <Link to="/habitos" data-test="habit-link">
                     <p>Hábitos</p>
                 </Link>
-                
-                <p>Histórico</p>
+                <Link to="/hoje" data-test="today-link">
+                    <CircularContainer>
+                        <CircularProgressbar value={progress}
+                            text="Hoje"
+                            background={true}
+                            backgroundPadding={5}
+                            styles={buildStyles({
+                                textSize: "18px",
+                                textColor: "#FFFFFF",
+                                pathColor: "#FFFFFF",
+                                trailColor: "#52B6FF",
+                                backgroundColor: "#52B6FF"
+                            })}
+                        />
+                    </CircularContainer>
+                </Link>
+                <Link to="/historico" data-test="history-link">
+                    <p>Histórico</p>
+                </Link>
             </Bottom>
-            <Link to="/hoje">
-                <CircularContainer>
-                    <CircularProgressbar value={progress}
-                    text="Hoje"
-                    background={true}
-                    backgroundPadding={5}
-                    styles={buildStyles({
-                        textSize: "18px",
-                        textColor: "#FFFFFF",
-                        pathColor: "#FFFFFF",
-                        trailColor: "#52B6FF",
-                        backgroundColor: "#52B6FF"
-                    })}
-                    />
-                </CircularContainer>
-            </Link>
+
 
         </>
     )
