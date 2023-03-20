@@ -163,6 +163,9 @@ const Container = styled.div`
     padding-left: 10px;
     padding-right: 10px;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 const CreateHabits = styled.div`

@@ -36,6 +36,9 @@ body {
 	line-height: 1;
 	overflow-y: hidden;
 }
+body::webkit-scrollbar{
+	display:none;
+}
 ol, ul {
 	list-style: none;
 }

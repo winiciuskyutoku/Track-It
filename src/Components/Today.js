@@ -108,6 +108,9 @@ const Container = styled.div`
     padding-left: 10px;
     padding-right: 10px;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 const CreateHabits = styled.div`
@@ -155,7 +158,7 @@ const HabitList = styled.div`
 const Title = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 18px;
     h2{
         color: #666666;
         font-size: 20px;
