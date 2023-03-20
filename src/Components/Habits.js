@@ -56,7 +56,10 @@ export default function Habit({ token }) {
                 setName("")
                 setDays([])
             })
-            .catch(fail => alert(fail.response.data.message))
+            .catch(fail => {
+                setEnable(false)
+                alert(fail.response.data.message)
+            })
     }
 
     function deleteHabit(id){
@@ -199,7 +202,7 @@ const HabitBox = styled.div`
     height: 220px;
     background-color: #FFFFFF;
     border-radius: 5px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 
     padding: 20px;
     box-sizing: border-box;

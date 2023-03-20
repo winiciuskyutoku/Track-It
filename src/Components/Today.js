@@ -37,6 +37,10 @@ export default function Today({ token }) {
 
     useEffect(() => {
 
+        if(arrayHabits.length === 0){
+            setProgress(0)
+        }
+
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today"
         const config = {
             headers: { Authorization: `Bearer ${token}` }
@@ -67,7 +71,7 @@ export default function Today({ token }) {
             <Container>
                 <CreateHabits>
                 <h1 data-test="today">{upperCase}{dayOfWeek.weekday(0).locale("pt-br").format(", DD/MM")}</h1>
-                <H2 data-test="today-counter" arrayHabits={arrayHabits.length}>{arrayHabits.length === 0 ? "Nenhum" : (arrayHabits.length/tasks.length * 100).toFixed(0) + "%"} dos hábitos concluidos</H2> 
+                <H2 data-test="today-counter" arrayHabits={arrayHabits.length}>{arrayHabits.length === 0 ? "Nenhum hábito concluído ainda" : (arrayHabits.length/tasks.length * 100).toFixed(0) + "% dos hábitos concluidos"} </H2> 
                 </CreateHabits>
                 <HabitsContainer>
                     {tasks.map(e => {
@@ -99,7 +103,6 @@ export default function Today({ token }) {
 const Container = styled.div`
     margin-top: 70px;
     margin-bottom: 70px;
-    //padding-bottom: 50px;
     background-color: #e5e5e5;
     height: calc(100vh - 140px);
     padding-left: 10px;
@@ -179,5 +182,6 @@ const P = styled.p`
 
 const P2 = styled.p`
     color: ${(props) => props.currentSequence === props.highestSequence &&  props.highestSequence > 0 ? "#8fc549" : "#666666"};
+    color: ${(props) => props.currentSequence > props.highestSequence && "#666666"};
     margin-left: 5px;   
 `
